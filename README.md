@@ -46,5 +46,6 @@ View Saved Notes: View and edit existing notes.
 Delete Notes: Delete notes that are no longer needed.
 Responsive Design: Responsive layout for better user experience on different devices.
 
-Deployed Site:
-Screenshot:
+Deployed Site:https://wcburnette.github.io/NoteTaker/
+Screenshot: [Screenshot 2024-07-19 121316](https://github.com/user-attachments/assets/e28ebdbe-fc1e-42de-87c2-47b91f7f5b5c)
+
