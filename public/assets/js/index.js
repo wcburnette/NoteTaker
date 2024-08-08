@@ -16,40 +16,26 @@ if (window.location.pathname === '/notes') {
   noteList = document.querySelector('#list-group');
 }
 
-const show = (elem) => {
-  elem.style.display = 'inline';
-};
-
-const hide = (elem) => {
-  elem.style.display = 'none';
-};
+const show = (elem) => elem.style.display = 'inline';
+const hide = (elem) => elem.style.display = 'none';
 
 let activeNote = {};
 
-const getNotes = () =>
-  fetch('/api/notes', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+const getNotes = () => fetch('/api/notes', {
+  method: 'GET',
+  headers: { 'Content-Type': 'application/json' },
+});
 
-const saveNote = (note) =>
-  fetch('/api/notes', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(note),
-  });
+const saveNote = (note) => fetch('/api/notes', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(note),
+});
 
-const deleteNote = (id) =>
-  fetch(`/api/notes/${id}`, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+const deleteNote = (id) => fetch(`/api/notes/${id}`, {
+  method: 'DELETE',
+  headers: { 'Content-Type': 'application/json' },
+});
 
 const renderActiveNote = () => {
   hide(saveNoteBtn);
@@ -71,10 +57,7 @@ const renderActiveNote = () => {
 };
 
 const handleNoteSave = () => {
-  const newNote = {
-    title: noteTitle.value,
-    text: noteText.value,
-  };
+  const newNote = { title: noteTitle.value, text: noteText.value };
   saveNote(newNote).then(() => {
     getAndRenderNotes();
     renderActiveNote();
@@ -83,13 +66,9 @@ const handleNoteSave = () => {
 
 const handleNoteDelete = (e) => {
   e.stopPropagation();
+  const noteId = JSON.parse(e.target.parentElement.getAttribute('data-note')).id;
 
-  const note = e.target;
-  const noteId = JSON.parse(note.parentElement.getAttribute('data-note')).id;
-
-  if (activeNote.id === noteId) {
-    activeNote = {};
-  }
+  if (activeNote.id === noteId) activeNote = {};
 
   deleteNote(noteId).then(() => {
     getAndRenderNotes();
@@ -126,8 +105,6 @@ const renderNoteList = async (notes) => {
     noteList.innerHTML = '';
   }
 
-  let noteListItems = [];
-
   const createLi = (text, delBtn = true) => {
     const liEl = document.createElement('li');
     liEl.classList.add('list-group-item');
@@ -150,6 +127,8 @@ const renderNoteList = async (notes) => {
     return liEl;
   };
 
+  let noteListItems = [];
+
   if (jsonNotes.length === 0) {
     noteListItems.push(createLi('No saved Notes', false));
   }
@@ -157,7 +136,6 @@ const renderNoteList = async (notes) => {
   jsonNotes.forEach((note) => {
     const li = createLi(note.title);
     li.dataset.note = JSON.stringify(note);
-
     noteListItems.push(li);
   });
 
@@ -176,6 +154,7 @@ if (window.location.pathname === '/notes') {
 }
 
 getAndRenderNotes();
+
 
 
 
